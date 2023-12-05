@@ -1,6 +1,5 @@
 "use server";
 
-import { IStatCardParam } from "@/app/(dashboard)/page";
 import prisma from "../src/lib/prisma";
 import { currentUser } from "@clerk/nextjs";
 import { IFormSchema } from '../models/IFormSchema';
@@ -64,10 +63,7 @@ export async function createForm(data: IFormSchema) {console.log(data);
 }
 export async function getForms() {
     try {
-        const user = await currentUser()
-        if(!user) {
-            throw new UserNotFound();
-        }
+        const user = await validateUser();
         const forms = await prisma.form.findMany({
             where:{ userId: user?.id },
             orderBy: { createAt: 'desc' }
@@ -76,4 +72,22 @@ export async function getForms() {
     } catch (error) {
         return [];
     }
+}
+async function validateUser() {
+    const user = await currentUser();
+    if (!user) {
+        throw new UserNotFound();
+    }
+    return user;
+}
+
+export async function getFormById(formId: number) {
+    const user = await validateUser();
+    const form = await prisma.form.findUnique({
+        where: {
+            userId: user.id,
+            id: formId
+        }
+    })
+    return form;
 }

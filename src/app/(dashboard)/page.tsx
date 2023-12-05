@@ -148,19 +148,25 @@ function FormCard({form}:{form: Form}) {
         </span>}
       </CardDescription>
     </CardHeader>
-    <CardContent className="h-[20px] truncate text-sm text-muted-foreground">
-        {form.description || "No description"}
-        {form.publised ? 
-          <Button asChild variant="secondary" className="w-full mt-2 test-md gap-4">
-            <Link href={`/froms/${form.id}`}>View Submission
-            </Link>
-          </Button> : 
-          <Button asChild className="w-full mt-2 test-md gap-4">
-            <Link href={`/builder/${form.id}`}>Edit form
-            </Link>
-          </Button> 
-        
-        }
+    <CardContent>
+      <div className="flex flex-col">
+        <div className="truncate text-sm text-muted-foreground">
+          {form.description || "No description"}
+        </div>
+        <div>
+          {form.publised ? 
+            <Button asChild  className="w-full mt-2 test-md gap-4">
+              <Link href={`/froms/${form.id}`}>View Submission
+              </Link>
+            </Button> : 
+            <Button asChild variant="secondary" className="w-full mt-2 test-md gap-4">
+              <Link href={`/builder/${form.id}`}>Edit form
+              </Link>
+            </Button> 
+          
+          }
+        </div>
+      </div>
     </CardContent>
   </Card>
 }
