@@ -4,24 +4,24 @@ import { TextFieldFormElement } from "./fields/textField";
 export type ElementsType = "TextField";
 export type FormElement = {
     type: ElementsType,
-    designerType: React.FC
+    designerComponent: React.FC<{element: FormElementInstance}>
     formComponent: React.FC,
     propertiesComponent: React.FC
     designerBtnElement: {
-        icon: React.ReactElement,
+        icon: React.ElementType,
         label: string
     } 
-    construct: (id: string) =>FormElementInstance
+    constructor: (id: string) => FormElementInstance
 }
-type FormElementInstance = {
-    Id: string,
-    type: FormElement,
+export type FormElementInstance = {
+    id: string,
+    type: ElementsType,
     extraAttr?: Record<string, any>
 }
 type FormElementType = {
     [key in ElementsType]: FormElement
 }
 
-export const FormElement: FormElementType = {
+export const FormElements: FormElementType = {
     TextField: TextFieldFormElement
 }
