@@ -16,7 +16,7 @@ export type FormElement = {
 export type FormElementInstance = {
     id: string,
     type: ElementsType,
-    extraAttr?: Record<string, any>
+    extraAttr?: any
 }
 type FormElementType = {
     [key in ElementsType]: FormElement

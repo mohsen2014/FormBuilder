@@ -5,7 +5,8 @@ import { FormElementInstance } from "../formElement"
 type AddElementType = (index: number,element: FormElementInstance) => void
 type DesignerContextType = {
     element: FormElementInstance[],
-    addElement: AddElementType
+    addElement: AddElementType,
+    removeElement: (id: string) => void
 }
 
 export const DesignerContext = createContext<DesignerContextType | null>(null)
@@ -19,7 +20,8 @@ export function DesignerContextProvider({children}: {children: ReactNode}) {
       return data
     })
   }
+  const removeElement = (id: string) => setElement((prev) => prev.filter(p => p.id !== id));
   return (
-    <DesignerContext.Provider value={{element,addElement}}>{children}</DesignerContext.Provider>
+    <DesignerContext.Provider value={{element,addElement, removeElement}}>{children}</DesignerContext.Provider>
   )
 }
