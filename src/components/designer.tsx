@@ -9,7 +9,7 @@ import {  FormElements, ElementsType } from './formElement';
 import { v4 as uuidv4 } from 'uuid';
 import DesignerElementWrapper from './designerElementWrapper';
 export default function Designer() {
-  const {element, addElement} = useDesigner()
+  const {element, addElement, setSelectedElement, selectedElement} = useDesigner()
   const droppable = useDroppable({
     id:"designer-drop-area",
     data: {
@@ -33,7 +33,11 @@ export default function Designer() {
 
   return (
     <div className='w-full h-full flex'>
-        <div className="p-4 w-full">
+        <div className="p-4 w-full" onClick={() => {
+          if(selectedElement) {
+            setSelectedElement(null)
+          }
+        }}>
             <div 
             ref={droppable.setNodeRef} 
             className={cn("bg-background h-full m-auto rounded-xl flex flex-col flex-grow items-center justify-start flex-1 max-w-[920px]",
